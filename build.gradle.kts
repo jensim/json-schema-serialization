@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.loadProperties
-
 plugins {
   kotlin("multiplatform") version "1.7.0"
   kotlin("plugin.serialization") version "1.7.0"
@@ -9,7 +7,6 @@ plugins {
 
 repositories {
   mavenCentral()
-  jcenter()
 }
 
 kotlin {
@@ -24,7 +21,7 @@ kotlin {
       }
     }
   }
-
+/*
   js(BOTH) {
     nodejs {
       testTask {
@@ -36,6 +33,7 @@ kotlin {
       }
     }
   }
+*/
 
   mingwX64()
   linuxX64()
@@ -64,43 +62,12 @@ kotlin {
       }
     }
 
-    val jsMain by getting
-    val jsTest by getting {
-      dependencies {
-        implementation(kotlin("test-js"))
-      }
-    }
-
-    val nativeMain by creating {
-      dependsOn(commonMain)
-    }
-
-    val nativeTest by creating {
-      dependsOn(commonTest)
-    }
-
-    val mingwX64Main by getting {
-      dependsOn(nativeMain)
-    }
-
-    val mingwX64Test by getting {
-      dependsOn(nativeTest)
-    }
-
-    val linuxX64Main by getting {
-      dependsOn(nativeMain)
-    }
-
-    val linuxX64Test by getting {
-      dependsOn(nativeTest)
-    }
-
-    val macosX64Main by getting {
-      dependsOn(nativeMain)
-    }
-
-    val macosX64Test by getting {
-      dependsOn(nativeTest)
+  }
+  tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+      freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+      freeCompilerArgs += "-opt-in=kotlinx.serialization.ImplicitReflectionSerializer"
+      freeCompilerArgs += "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
     }
   }
 }

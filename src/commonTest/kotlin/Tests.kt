@@ -14,7 +14,6 @@ import com.github.jensim.jss.dsl.maxItems
 import com.github.jensim.jss.dsl.minItems
 import com.github.jensim.jss.dsl.pattern
 import com.github.jensim.jss.dsl.propertyNames
-import com.github.ricky12awesome.jss.dsl.*
 import com.github.jensim.jss.encodeToSchema
 import com.github.jensim.jss.globalJson
 import kotlinx.serialization.SerialName

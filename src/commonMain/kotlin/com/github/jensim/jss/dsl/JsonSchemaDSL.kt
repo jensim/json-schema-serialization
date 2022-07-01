@@ -154,24 +154,24 @@ class ObjectBuilder(
     val required = mutableListOf<String>()
 
     @ExperimentalJsonSchemaDSL
-    inline fun <B : PropertyBuilder<*>> property(
+    inline fun <T: Any?, B : PropertyBuilder<T>> property(
         name: String,
-        type: PropertyType<*, B>,
+        type: PropertyType<T, B>,
         isRequired: Boolean = true,
         builder: B.() -> Unit
     ) = propertyUnsafe(name, buildProperty(type, builder), isRequired)
 
     @ExperimentalJsonSchemaDSL
-    inline fun <B : PropertyBuilder<*>> requiredProperty(
+    inline fun <T:Any?, B : PropertyBuilder<T>> requiredProperty(
         name: String,
-        type: PropertyType<*, B>,
+        type: PropertyType<T, B>,
         builder: B.() -> Unit
     ) = property(name, type, true, builder)
 
     @ExperimentalJsonSchemaDSL
-    inline fun <B : PropertyBuilder<*>> optionalProperty(
+    inline fun <T:Any?,B : PropertyBuilder<T>> optionalProperty(
         name: String,
-        type: PropertyType<*, B>,
+        type: PropertyType<T, B>,
         builder: B.() -> Unit
     ) = property(name, type, false, builder)
 
