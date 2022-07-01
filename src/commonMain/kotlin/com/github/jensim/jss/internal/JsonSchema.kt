@@ -1,12 +1,14 @@
-package com.github.ricky12awesome.jss.internal
+package com.github.jensim.jss.internal
 
-import com.github.ricky12awesome.jss.JsonSchema
-import com.github.ricky12awesome.jss.JsonSchema.Description
-import com.github.ricky12awesome.jss.JsonSchema.StringEnum
-import com.github.ricky12awesome.jss.JsonSchema.IntRange
-import com.github.ricky12awesome.jss.JsonSchema.FloatRange
-import com.github.ricky12awesome.jss.JsonSchema.Pattern
-import com.github.ricky12awesome.jss.JsonType
+import com.github.jensim.jss.JsonSchema
+import com.github.jensim.jss.JsonSchema.Description
+import com.github.jensim.jss.JsonSchema.StringEnum
+import com.github.jensim.jss.JsonSchema.IntRange
+import com.github.jensim.jss.JsonSchema.FloatRange
+import com.github.jensim.jss.JsonSchema.Pattern
+import com.github.jensim.jss.JsonType
+import com.github.jensim.jss.JsonType.STRING
+import com.github.jensim.jss.internal.JsonSchemaDefinitions.Key
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.json.*
 
@@ -79,7 +81,7 @@ internal fun SerialDescriptor.jsonSchemaObjectSealed(definitions: JsonSchemaDefi
   val (_, value) = elementDescriptors.toList()
 
   properties["type"] = buildJson {
-    it["type"] = JsonType.STRING.json
+    it["type"] = STRING.json
     it["enum"] = value.elementNames
   }
 
@@ -190,7 +192,7 @@ internal fun SerialDescriptor.createJsonSchema(
   definitions: JsonSchemaDefinitions
 ): JsonObject {
   val combinedAnnotations = annotations + this.annotations
-  val key = JsonSchemaDefinitions.Key(this, combinedAnnotations)
+  val key = Key(this, combinedAnnotations)
 
   return when (kind.jsonType) {
     JsonType.NUMBER -> definitions.get(key) { jsonSchemaNumber(combinedAnnotations) }

@@ -102,12 +102,6 @@ kotlin {
     val macosX64Test by getting {
       dependsOn(nativeTest)
     }
-
-    all {
-      // languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
-      // languageSettings.useExperimentalAnnotation("kotlinx.serialization.ExperimentalSerializationApi")
-      // languageSettings.enableLanguageFeature("InlineClasses")
-    }
   }
 }
 
@@ -131,4 +125,3 @@ publishing {
     }
   }
 }
-

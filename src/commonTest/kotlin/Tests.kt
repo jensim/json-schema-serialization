@@ -1,8 +1,22 @@
-import com.github.ricky12awesome.jss.JsonSchema
-import com.github.ricky12awesome.jss.JsonSchema.*
+import com.github.jensim.jss.JsonSchema
+import com.github.jensim.jss.JsonSchema.*
+import com.github.jensim.jss.dsl.ExperimentalJsonSchemaDSL
+import com.github.jensim.jss.dsl.PropertyType
+import com.github.jensim.jss.dsl.PropertyType.Array
+import com.github.jensim.jss.dsl.PropertyType.Object
+import com.github.jensim.jss.dsl.PropertyType.ObjectMap
+import com.github.jensim.jss.dsl.additionalProperties
+import com.github.jensim.jss.dsl.buildSchema
+import com.github.jensim.jss.dsl.description
+import com.github.jensim.jss.dsl.enum
+import com.github.jensim.jss.dsl.items
+import com.github.jensim.jss.dsl.maxItems
+import com.github.jensim.jss.dsl.minItems
+import com.github.jensim.jss.dsl.pattern
+import com.github.jensim.jss.dsl.propertyNames
 import com.github.ricky12awesome.jss.dsl.*
-import com.github.ricky12awesome.jss.encodeToSchema
-import com.github.ricky12awesome.jss.globalJson
+import com.github.jensim.jss.encodeToSchema
+import com.github.jensim.jss.globalJson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -69,7 +83,7 @@ class Tests {
   @ExperimentalJsonSchemaDSL
   fun schema_dsl() {
     val schema = buildSchema {
-      val data by definitions(PropertyType.Object) {
+      val data by definitions(Object) {
         properties {
           property("name", PropertyType.String) {
             description = "Name of something"
@@ -82,7 +96,7 @@ class Tests {
       }
 
       properties {
-        property("array", PropertyType.Array(PropertyType.Object)) {
+        property("array", Array(Object)) {
           description = "Some array with random data"
           minItems = 1
           maxItems = 64
@@ -92,7 +106,7 @@ class Tests {
           }
         }
 
-        property("map", PropertyType.ObjectMap(PropertyType.Object)) {
+        property("map", ObjectMap(Object)) {
           description = "Some map with random data"
 
           propertyNames {

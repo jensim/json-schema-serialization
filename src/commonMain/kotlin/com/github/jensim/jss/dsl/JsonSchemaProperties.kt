@@ -1,6 +1,6 @@
-package com.github.ricky12awesome.jss.dsl
+package com.github.jensim.jss.dsl
 
-import com.github.ricky12awesome.jss.globalJson
+import com.github.jensim.jss.globalJson
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.*
@@ -90,8 +90,8 @@ inline fun CommonObjectBuilder<*>.additionalProperties(value: Boolean) {
 
 @ExperimentalJsonSchemaDSL
 inline fun <T, B : PropertyBuilder<T>> CommonObjectBuilder<*>.additionalProperties(
-  type: PropertyType<T, B>,
-  builder: B.() -> Unit
+    type: PropertyType<T, B>,
+    builder: B.() -> Unit
 ) {
   data["additionalProperties"] = buildProperty(type, builder)
 }

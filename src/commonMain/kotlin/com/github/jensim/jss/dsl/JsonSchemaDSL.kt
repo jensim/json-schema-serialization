@@ -1,6 +1,8 @@
-package com.github.ricky12awesome.jss.dsl
+package com.github.jensim.jss.dsl
 
-import com.github.ricky12awesome.jss.JsonType
+import com.github.jensim.jss.JsonType
+import com.github.jensim.jss.dsl.ObjectBuilder.Definitions
+import com.github.jensim.jss.dsl.PropertyType.Object
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -75,7 +77,7 @@ sealed class PropertyType<T, B : PropertyBuilder<T>>(val builder: () -> B) {
     }
   }
 
-  inline fun build(definitions: ObjectBuilder.Definitions?, body: B.() -> Unit): JsonObject {
+  inline fun build(definitions: Definitions?, body: B.() -> Unit): JsonObject {
     return when (this) {
       Object -> build(ObjectBuilder(definitions, false) as B, body)
       else -> build(body)
@@ -141,8 +143,8 @@ class ObjectMapBuilder<T, B : PropertyBuilder<T>>(
 class ObjectSealedBuilder : CommonObjectBuilder<JsonObject>(JsonObject.serializer(), JsonType.OBJECT_SEALED)
 
 class ObjectBuilder(
-  definitions: Definitions? = null,
-  private val isRoot: Boolean = true
+    definitions: Definitions? = null,
+    private val isRoot: Boolean = true
 ) : CommonObjectBuilder<JsonObject>(JsonObject.serializer(), JsonType.OBJECT) {
   val definitions = definitions ?: Definitions()
   val properties = Properties(this.definitions)
@@ -153,24 +155,24 @@ class ObjectBuilder(
 
     @ExperimentalJsonSchemaDSL
     inline fun <B : PropertyBuilder<*>> property(
-      name: String,
-      type: PropertyType<*, B>,
-      isRequired: Boolean = true,
-      builder: B.() -> Unit
+        name: String,
+        type: PropertyType<*, B>,
+        isRequired: Boolean = true,
+        builder: B.() -> Unit
     ) = propertyUnsafe(name, buildProperty(type, builder), isRequired)
 
     @ExperimentalJsonSchemaDSL
     inline fun <B : PropertyBuilder<*>> requiredProperty(
-      name: String,
-      type: PropertyType<*, B>,
-      builder: B.() -> Unit
+        name: String,
+        type: PropertyType<*, B>,
+        builder: B.() -> Unit
     ) = property(name, type, true, builder)
 
     @ExperimentalJsonSchemaDSL
     inline fun <B : PropertyBuilder<*>> optionalProperty(
-      name: String,
-      type: PropertyType<*, B>,
-      builder: B.() -> Unit
+        name: String,
+        type: PropertyType<*, B>,
+        builder: B.() -> Unit
     ) = property(name, type, false, builder)
 
     fun propertyUnsafe(name: String, element: JsonObject, isRequired: Boolean = true) {
@@ -217,9 +219,9 @@ class ObjectBuilder(
 
     @ExperimentalJsonSchemaDSL
     inline fun <T, B : PropertyBuilder<T>> definition(
-      id: String,
-      type: PropertyType<T, B>,
-      builder: B.() -> Unit
+        id: String,
+        type: PropertyType<T, B>,
+        builder: B.() -> Unit
     ): DefinitionReference {
       data[id] = type.build(this, builder)
 
@@ -233,16 +235,16 @@ class ObjectBuilder(
 
     @ExperimentalJsonSchemaDSL
     operator fun <T, B : PropertyBuilder<T>> invoke(
-      type: PropertyType<T, B>,
-      builder: B.() -> Unit
+        type: PropertyType<T, B>,
+        builder: B.() -> Unit
     ): DefinitionReferenceDelegate<T, B> {
       return DefinitionReferenceDelegate(type, builder)
     }
 
     @ExperimentalJsonSchemaDSL
     inner class DefinitionReferenceDelegate<T, B : PropertyBuilder<T>>(
-      private val type: PropertyType<T, B>,
-      private val builder: B.() -> Unit
+        private val type: PropertyType<T, B>,
+        private val builder: B.() -> Unit
     ) : ReadOnlyProperty<Any?, DefinitionReference> {
       override fun getValue(thisRef: Any?, property: KProperty<*>): DefinitionReference {
         if (property.name !in data) {
@@ -283,5 +285,5 @@ inline fun <T, B : PropertyBuilder<T>> buildProperty(type: PropertyType<T, B>, b
 
 @ExperimentalJsonSchemaDSL
 inline fun buildSchema(builder: ObjectBuilder.() -> Unit): JsonObject {
-  return buildProperty(PropertyType.Object, builder)
+  return buildProperty(Object, builder)
 }

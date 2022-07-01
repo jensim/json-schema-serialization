@@ -1,7 +1,7 @@
-package com.github.ricky12awesome.jss
+package com.github.jensim.jss
 
-import com.github.ricky12awesome.jss.internal.JsonSchemaDefinitions
-import com.github.ricky12awesome.jss.internal.createJsonSchema
+import com.github.jensim.jss.internal.JsonSchemaDefinitions
+import com.github.jensim.jss.internal.createJsonSchema
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.json.*
