@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-  kotlin("multiplatform") version "1.6.20"
-  kotlin("plugin.serialization") version "1.2.20"
-  id("org.jetbrains.dokka") version "1.4.10.2"
+  kotlin("multiplatform") version "1.7.0"
+  kotlin("plugin.serialization") version "1.7.0"
+  id("org.jetbrains.dokka") version "1.7.0"
   `maven-publish`
 }
 
@@ -104,16 +104,16 @@ kotlin {
     }
 
     all {
-      languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
-      languageSettings.useExperimentalAnnotation("kotlinx.serialization.ExperimentalSerializationApi")
-      languageSettings.enableLanguageFeature("InlineClasses")
+      // languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
+      // languageSettings.useExperimentalAnnotation("kotlinx.serialization.ExperimentalSerializationApi")
+      // languageSettings.enableLanguageFeature("InlineClasses")
     }
   }
 }
 
 publishing {
   val key = System.getenv("BINTRAY_API_KEY")
-  val user = "ricky12awesome"
+  val user = "jensim"
 
   repositories {
     mavenLocal()
