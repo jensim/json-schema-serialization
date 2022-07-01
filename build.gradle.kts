@@ -21,23 +21,6 @@ kotlin {
       }
     }
   }
-/*
-  js(BOTH) {
-    nodejs {
-      testTask {
-        with(compilation) {
-          kotlinOptions {
-            moduleKind = "commonjs"
-          }
-        }
-      }
-    }
-  }
-*/
-
-  mingwX64()
-  linuxX64()
-  macosX64()
 
   sourceSets {
     val commonMain by getting {
