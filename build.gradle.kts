@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-  kotlin("multiplatform") version "1.4.20"
-  kotlin("plugin.serialization") version "1.4.20"
+  kotlin("multiplatform") version "1.6.20"
+  kotlin("plugin.serialization") version "1.2.20"
   id("org.jetbrains.dokka") version "1.4.10.2"
   `maven-publish`
 }
@@ -15,7 +15,7 @@ repositories {
 kotlin {
   jvm {
     compilations.all {
-      kotlinOptions.jvmTarget = "1.8"
+      kotlinOptions.jvmTarget = "11"
     }
 
     testRuns.all {
@@ -45,7 +45,7 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("reflect"))
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
       }
     }
 
@@ -60,7 +60,7 @@ kotlin {
     val jvmTest by getting {
       dependencies {
         implementation(kotlin("test-junit5"))
-        runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.0.0")
+        runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
       }
     }
 
