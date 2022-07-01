@@ -68,10 +68,11 @@ publishing {
     }
     */
     maven {
+      val ghUsername = System.getenv("GITHUB_ACTOR")
       name = "GitHubPackages"
-      url = uri("https://maven.pkg.github.com/octocat/hello-world")
+      url = uri("https://maven.pkg.github.com/$ghUsername/json-schema-serialization")
       credentials {
-        username = System.getenv("GITHUB_ACTOR")
+        username = ghUsername
         password = System.getenv("GITHUB_TOKEN")
       }
     }
